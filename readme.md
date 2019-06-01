@@ -6,4 +6,12 @@
 npm install enb-make
 ```
 
+### Зачем это репозитрий нужен
+* Иправленный [borschik](https://github.com/borschik/borschik/pull/152) для работы в Windows.
+* Изменил структуру проекта
+* Добавил возможность собирать merged-bundle
+* Добавил возможность собирать gemini тесты для блоков
+* Добавил возможность собирать примеры для блоков
+
+
 Готовая структура проекта представлена в репозиторий [project-stub](https://github.com/b1tc0re/project-stub)

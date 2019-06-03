@@ -34,7 +34,9 @@
     "postcss-url": "^8.0.0",
     "rebem-css": "^0.2.0",
     "rimraf": "^2.6.3",
-    "verdaccio": "^4.0.1"
+    "verdaccio": "^4.0.1",
+    "hermione": "^2.7.0",
+    "html-reporter": "^4.6.2"
   },
   "keywords": [
     "bem",

@@ -131,8 +131,8 @@ module.exports = {
     /**
      * Собрать тесты
      */
-    initializeGeminiTests : function() {
-        let tests = this.config.module('enb-bem-examples', null).createConfigurator('assembly-gemini');
+    initializeTests : function() {
+        let tests = this.config.module('enb-bem-examples', null).createConfigurator('assembly-tests');
 
         // Собирает из блоков примеры и переносит по платформам
         this.platforms.forEach( (platform) => {

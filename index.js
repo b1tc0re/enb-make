@@ -138,7 +138,7 @@ module.exports = {
         this.platforms.forEach( (platform) => {
             let destPath = 'bundles/' + platform + '.tests';
             // Удалить директорию с примерами потому что возможно некоторые блоки уже удалены
-            this.isTask('assembly-example') && techs.rimraf.sync(destPath);
+            this.isTask('assembly-tests') && techs.rimraf.sync(destPath);
 
             tests.configure({
                 destPath : destPath,

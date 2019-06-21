@@ -1,6 +1,7 @@
 const techs = require('./common/techs');
 let PLATFORMS = require('./common/platforms');
 let LEVELS = require('./common/levels');
+let NodeUnique = require('node-unique-array');
 
 module.exports = {
 
@@ -172,19 +173,19 @@ module.exports = {
                 this.getSourceLevels(platform),
                 { path: 'blocks/test.blocks', check: true },
             ),
-            extendedLevels = [].concat(
-                levels,
-                [
-                    { path: techs.path.join(nodeDirname, blockName + '.blocks'), check: true },
-                    { path: techs.path.join(nodeDirname, exampleName + '.blocks'), check: true },
-                    { path: techs.path.join(nodeDirname,  'blocks'), check: true }
-                ].filter(techs.files.fs.existsSync)
-            );
+            testsLevels = [
+                { path: techs.path.join(nodeDirname, blockName + '.blocks'), check: true },
+                { path: techs.path.join(nodeDirname, exampleName + '.blocks'), check: true },
+                { path: techs.path.join(nodeDirname,  'blocks'), check: true }
+            ].filter((item) => { return techs.files.fs.existsSync(item.path || item) }),
+            extendedLevels = [].concat( levels, testsLevels );
+
+        let unique_array = new NodeUnique(extendedLevels);
 
         nodeConfig.addTechs([
             // essential
             //[techs.enbBemTechs.levels, { levels: this.isTask('merged') ?  this.getSourceLevels(platform) : extendedLevels }],
-            [techs.enbBemTechs.levels, { levels: extendedLevels }],
+            [techs.enbBemTechs.levels, { levels: unique_array.get() }],
 
 
             [techs.enbBemTechs.deps],

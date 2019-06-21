@@ -1,6 +1,6 @@
 {
   "name": "enb-make",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "ENB tech to build projects",
   "repository": {
     "type": "git",
@@ -37,7 +37,8 @@
     "verdaccio": "^4.0.1",
     "hermione": "^2.7.1",
     "html-reporter": "^4.6.3",
-    "bem-components": "^6.0.1"
+    "bem-components": "^6.0.1",
+    "node-unique-array": "^0.0.6"
   },
   "keywords": [
     "bem",

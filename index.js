@@ -165,9 +165,26 @@ module.exports = {
      */
     _assemblyTechs : function(nodeConfig, platform) {
 
+        let nodeDirname = nodeConfig.getNodePath(),
+            blockName = techs.path.basename(techs.path.dirname(nodeDirname)),
+            exampleName = techs.path.basename(nodeDirname),
+            levels = [].concat(
+                this.getSourceLevels(platform),
+                { path: 'blocks/test.blocks', check: true },
+            ),
+            extendedLevels = [].concat(
+                levels,
+                [
+                    { path: techs.path.join(nodeDirname, blockName + '.blocks'), check: true },
+                    { path: techs.path.join(nodeDirname, exampleName + '.blocks'), check: true },
+                    { path: techs.path.join(nodeDirname,  'blocks'), check: true }
+                ].filter(techs.files.fs.existsSync)
+            );
+
         nodeConfig.addTechs([
             // essential
-            [techs.enbBemTechs.levels, { levels: this.getSourceLevels(platform) }],
+            //[techs.enbBemTechs.levels, { levels: this.isTask('merged') ?  this.getSourceLevels(platform) : extendedLevels }],
+            [techs.enbBemTechs.levels, { levels: extendedLevels }],
 
 
             [techs.enbBemTechs.deps],

@@ -6,7 +6,7 @@
 npm install enb-make
 ```
 
-### Зачем это репозитрий нужен
+### Зачем этот репозиторий нужен
 * Иправленный [borschik](https://github.com/borschik/borschik/pull/152) для работы в Windows.
 * Изменил структуру проекта
 * Добавил возможность собирать merged-bundle

@@ -169,11 +169,9 @@ module.exports = {
         let nodeDirname = nodeConfig.getNodePath(),
             blockName = techs.path.basename(techs.path.dirname(nodeDirname)),
             exampleName = techs.path.basename(nodeDirname),
-            levels = [].concat(
-                this.getSourceLevels(platform),
-                { path: 'blocks/test.blocks', check: true },
-            ),
+            levels = this.getSourceLevels(platform),
             testsLevels = [
+                { path: 'blocks/test.blocks', check: true },
                 { path: techs.path.join(nodeDirname, blockName + '.blocks'), check: true },
                 { path: techs.path.join(nodeDirname, exampleName + '.blocks'), check: true },
                 { path: techs.path.join(nodeDirname,  'blocks'), check: true }

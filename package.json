@@ -1,6 +1,6 @@
 {
   "name": "enb-make",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "ENB tech to build projects",
   "repository": {
     "type": "git",

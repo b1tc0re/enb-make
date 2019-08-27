@@ -15,6 +15,16 @@ module.exports = {
     configArg : null,
 
     /**
+     * Удалить бандл с тестами
+     */
+    testBundleDelete : true,
+
+    /**
+     * Удалить бандл с примерами
+     */
+    examplesBundleDelete : true,
+
+    /**
      * Инстанции класса ProjectConfig передаются из enb-make-файла
      * @param {ProjectConfig} config
      * @param {object} options
@@ -68,32 +78,32 @@ module.exports = {
                 bundles = techs.files.fs.readdirSync(dir),
                 bemdeclFiles = [];
 
-                if( bundles.length < 1 )
-                    return false;
+            if( bundles.length < 1 )
+                return false;
 
-                bundles.forEach((bundle) => {
+            bundles.forEach((bundle) => {
 
-                    if (bundle !== 'merged' && bundle !== '.bem') {
+                if (bundle !== 'merged' && bundle !== '.bem') {
 
-                        let nodePath = techs.path.join(dir, bundle),
-                            bemDecl = bundle + '.bemdecl.js';
+                    let nodePath = techs.path.join(dir, bundle),
+                        bemDecl = bundle + '.bemdecl.js';
 
-                        nodeConfig.addTech([
-                            techs.enbBemTechs.provideBemdecl, {
-                                node: nodePath,
-                                target: bemDecl
-                            }
-                        ]);
+                    nodeConfig.addTech([
+                        techs.enbBemTechs.provideBemdecl, {
+                            node: nodePath,
+                            target: bemDecl
+                        }
+                    ]);
 
-                        bemdeclFiles.push(bemDecl);
-                    }
-                });
+                    bemdeclFiles.push(bemDecl);
+                }
+            });
 
-                // Объединяем скопированные BEMDECL-файлы
-                nodeConfig.addTech([techs.enbBemTechs.mergeBemdecl, {sources: bemdeclFiles}]);
+            // Объединяем скопированные BEMDECL-файлы
+            nodeConfig.addTech([techs.enbBemTechs.mergeBemdecl, {sources: bemdeclFiles}]);
 
-                // Запуск сборки
-                this._assemblyTechs(nodeConfig, platform);
+            // Запуск сборки
+            this._assemblyTechs(nodeConfig, platform);
         }));
 
         return this;
@@ -109,8 +119,12 @@ module.exports = {
         // Собирает из блоков примеры и переносит по платформам
         this.platforms.forEach( (platform) => {
             let destPath = 'bundles/' + platform + '.examples';
-            // Удалить директорию с примерами потому что возможно некоторые блоки уже удалены
-            this.isTask('assembly-example') && techs.rimraf.sync(destPath);
+
+            if( this.examplesBundleDelete && this.isTask('assembly-tests') ) {
+                techs.rimraf.sync(destPath);
+                this.testBundleDelete = false;
+            }
+
 
             tests.configure({
                 destPath : destPath,
@@ -133,13 +147,17 @@ module.exports = {
      * Собрать тесты
      */
     initializeTests : function() {
+
         let tests = this.config.module('enb-bem-examples', null).createConfigurator('assembly-tests');
 
         // Собирает из блоков примеры и переносит по платформам
         this.platforms.forEach( (platform) => {
             let destPath = 'bundles/' + platform + '.tests';
-            // Удалить директорию с примерами потому что возможно некоторые блоки уже удалены
-            this.isTask('assembly-tests') && techs.rimraf.sync(destPath);
+
+            if( this.testBundleDelete && this.isTask('assembly-tests') ) {
+                techs.rimraf.sync(destPath);
+                this.testBundleDelete = false;
+            }
 
             tests.configure({
                 destPath : destPath,
@@ -279,7 +297,7 @@ module.exports = {
      */
     normalizeSymLink: function(nodeConfig) {
 
-        if( process.platform === 'win32' ) {
+        if( process.platform === 'win32' || process.platform === 'linux'  ) {
             let bemJsonPath = techs.path.join(nodeConfig._path, techs.path.basename(nodeConfig._path)) + '.bemjson.js';
             let targetBemJsonSymlink = bemJsonPath + '.symlink';
 

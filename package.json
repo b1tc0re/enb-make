@@ -1,6 +1,6 @@
 {
   "name": "enb-make",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ENB tech to build projects",
   "repository": {
     "type": "git",
@@ -13,17 +13,21 @@
   "homepage": "https://github.com/b1tc0re/enb-make",
   "main": "index.js",
   "dependencies": {
-    "autoprefixer": "^9.6.1",
-    "enb": "^1.3.0",
+    "autoprefixer": "^9.7.3",
+    "bem-components": "^6.0.1",
+    "enb": "^1.5.1",
     "enb-bem-examples": "^1.0.2",
-    "enb-bem-techs": "^2.2.1",
-    "enb-bemxjst": "^8.10.5",
+    "enb-bem-techs": "^2.2.2",
+    "enb-bemxjst": "^8.10.6",
     "enb-bh": "^1.2.1",
-    "enb-borschik": "https://github.com/b1tc0re/enb-borschik.git",
-    "enb-js": "^1.1.0",
+    "enb-borschik": "git+https://github.com/b1tc0re/enb-borschik.git",
+    "enb-js": "^1.1.1",
     "enb-magic-factory": "^0.6.0",
     "enb-modules": "^0.4.2",
     "enb-postcss": "^3.0.0",
+    "hermione": "^2.13.5",
+    "html-reporter": "^5.8.0",
+    "node-unique-array": "^0.0.6",
     "postcss-calc": "^7.0.1",
     "postcss-each": "^0.10.0",
     "postcss-for": "^2.1.1",
@@ -34,11 +38,7 @@
     "postcss-url": "^8.0.0",
     "rebem-css": "^0.2.0",
     "rimraf": "^3.0.0",
-    "verdaccio": "^4.2.2",
-    "hermione": "^2.12.6",
-    "html-reporter": "^4.12.1",
-    "bem-components": "^6.0.1",
-    "node-unique-array": "^0.0.6"
+    "verdaccio": "^4.4.2"
   },
   "keywords": [
     "bem",

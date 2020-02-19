@@ -39,7 +39,7 @@
     "rebem-css": "^0.2.0",
     "rimraf": "^3.0.0",
     "verdaccio": "^4.4.3",
-    "node-extend": "^3.0.2"
+    "node-extend": "^0.2.0"
   },
   "keywords": [
     "bem",

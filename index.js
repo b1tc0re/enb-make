@@ -1,7 +1,8 @@
 const techs = require('./common/techs');
-let PLATFORMS = require('./common/platforms');
-let LEVELS = require('./common/levels');
-let NodeUnique = require('node-unique-array');
+let PLATFORMS = require('./common/platforms'),
+    LEVELS = require('./common/levels'),
+    NodeUnique = require('node-unique-array'),
+    WorkSpace = techs.path.dirname(__filename);
 
 module.exports = {
 
@@ -200,7 +201,6 @@ module.exports = {
 
         nodeConfig.addTechs([
             // essential
-            //[techs.enbBemTechs.levels, { levels: this.isTask('merged') ?  this.getSourceLevels(platform) : extendedLevels }],
             [techs.enbBemTechs.levels, { levels: unique_array.get() }],
 
 
@@ -218,7 +218,14 @@ module.exports = {
             [techs.engines.bemhtml, {
                 sourceSuffixes: ['bemhtml', 'bemhtml.js'],
                 forceBaseTemplates: true,
-                engineOptions : { elemJsInstances : true }
+                engineOptions : {
+                    elemJsInstances : true,
+                    requires : {
+                        'helper': {
+                            commonJS: techs.path.join(WorkSpace, 'common/helper'),
+                        }
+                    }
+                }
             }],
 
             // html

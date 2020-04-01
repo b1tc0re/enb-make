@@ -62,7 +62,7 @@ var vow = require('vow'),
  * };
  */
 module.exports = buildFlow.create()
-    .name('browser-js')
+    .name('bable-js')
     .target('target', '?.browser.js')
     .useFileList(['vanilla.js', 'js', 'browser.js'])
     .defineOption('includeYM', false)

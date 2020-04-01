@@ -83,7 +83,7 @@ module.exports = buildFlow.create()
                     file = new File(node.resolvePath(this._target), { sourceMap: this._sourcemap }),
                     needWrapIIFE = this._iife,
                     needToAddComments = !this._compress,
-                    bableParams = !this._bable,
+                    bableParams = this._bable,
                     compressOptions = { fromString: true },
                     compressed;
 
@@ -94,7 +94,7 @@ module.exports = buildFlow.create()
                 sources.forEach(function (source) {
                     needToAddComments && file.writeLine('/* begin: ' + source.relPath + ' */');
                     needWrapIIFE && file.writeLine('(function(){');
-                    file.writeFileContent(source.relPath, babel.transform(source.contents, bableParams));
+                    file.writeFileContent(source.relPath, babel.transformSync(source.contents, bableParams).code);
                     needWrapIIFE && file.writeLine('}());');
                     needToAddComments && file.writeLine('/* end: ' + source.relPath + ' */');
                 });

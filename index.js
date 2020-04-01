@@ -11,8 +11,11 @@ module.exports = {
      * @var {ProjectConfig}
      */
     config : null,
+
     platforms : null,
+
     exceptionsBundle : [ 'merged' ],
+
     configArg : null,
 
     /**
@@ -24,6 +27,8 @@ module.exports = {
      * Удалить бандл с примерами
      */
     examplesBundleDelete : true,
+
+    _options : {},
 
     /**
      * Инстанции класса ProjectConfig передаются из enb-make-файла
@@ -37,6 +42,7 @@ module.exports = {
         PLATFORMS = Object.assign(PLATFORMS ||{}, options.platforms || {});
         LEVELS = LEVELS.concat(options.levels || []);
         this.platforms = Object.keys(PLATFORMS);
+        this._options = options;
 
         return this;
     },
@@ -254,8 +260,7 @@ module.exports = {
             }],
 
             // js
-            [techs.bable, {} ],
-            [techs.browserJs, { includeYM: true, iife: true  }],
+            [techs.bable, { includeYM: true, iife: true, bable : {} } ],
             [techs.files.merge, {
                 target: '?.js',
                 sources: ['?.browser.js', '?.browser.bemhtml.js']

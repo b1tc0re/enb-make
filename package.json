@@ -1,6 +1,6 @@
 {
   "name": "enb-make",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "ENB tech to build projects",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "homepage": "https://github.com/b1tc0re/enb-make",
   "main": "index.js",
   "dependencies": {
-    "autoprefixer": "^9.7.4",
+    "autoprefixer": "^9.7.5",
     "bem-components": "^6.0.1",
     "enb": "^1.5.1",
     "enb-bem-examples": "^1.0.2",
@@ -25,10 +25,11 @@
     "enb-magic-factory": "^0.6.0",
     "enb-modules": "^0.4.2",
     "enb-postcss": "^3.0.0",
-    "hermione": "^3.0.0",
-    "html-reporter": "^5.12.0",
+    "extend": "^3.0.2",
+    "hermione": "^3.1.0",
+    "html-reporter": "^5.15.0",
     "node-unique-array": "^0.0.6",
-    "postcss-calc": "^7.0.1",
+    "postcss-calc": "^7.0.2",
     "postcss-each": "^0.10.0",
     "postcss-for": "^2.1.1",
     "postcss-import": "^12.0.1",
@@ -37,9 +38,8 @@
     "postcss-simple-vars": "^5.0.2",
     "postcss-url": "^8.0.0",
     "rebem-css": "^0.2.0",
-    "rimraf": "^3.0.0",
-    "verdaccio": "^4.4.3",
-    "node-extend": "^0.2.0"
+    "rimraf": "^3.0.2",
+    "verdaccio": "^4.4.2"
   },
   "keywords": [
     "bem",
@@ -49,5 +49,8 @@
   "engines": {
     "node": ">=4"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0"
+  }
 }

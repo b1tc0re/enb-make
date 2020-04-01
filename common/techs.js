@@ -39,6 +39,7 @@ module.exports = {
     borschik : require('enb-borschik/techs/borschik'),
 
     // js
+    bable: require('teach/bable'),
     browserJs: require('enb-js/techs/browser-js'),
     factory: require('enb-magic-factory'),
 };

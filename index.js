@@ -254,7 +254,8 @@ module.exports = {
             }],
 
             // js
-            [techs.browserJs, { includeYM: true }],
+            [techs.bable, {} ],
+            [techs.browserJs, { includeYM: true, iife: true  }],
             [techs.files.merge, {
                 target: '?.js',
                 sources: ['?.browser.js', '?.browser.bemhtml.js']

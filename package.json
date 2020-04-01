@@ -40,7 +40,8 @@
     "rebem-css": "^0.2.0",
     "rimraf": "^3.0.2",
     "verdaccio": "^4.4.2",
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "uglify-js": "^3.8.1"
   },
   "keywords": [
     "bem",

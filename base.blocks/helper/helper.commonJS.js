@@ -10,7 +10,7 @@ module.exports = {
      */
     append: function (target, extend) {
         this.isObject(target) || (target = {});
-        
+
         if( Array.isArray(target) )
         {
             target.forEach((_target, index) => {

@@ -18,7 +18,7 @@
     "enb": "^1.5.1",
     "enb-bem-examples": "^1.0.2",
     "enb-bem-techs": "^2.2.2",
-    "enb-bemxjst": "^8.10.6",
+    "enb-bemxjst": "git@github.com:b1tc0re/enb-bemxjst.git",
     "enb-bh": "^1.2.1",
     "enb-borschik": "git+https://github.com/b1tc0re/enb-borschik.git",
     "enb-js": "^1.1.1",

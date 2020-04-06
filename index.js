@@ -228,7 +228,7 @@ module.exports = {
                     elemJsInstances : true,
                     requires : {
                         'helper': {
-                            commonJS: techs.path.join(WorkSpace, 'common/helper'),
+                            commonJS: techs.path.join(WorkSpace, 'base.blocks/helper/helper.commonJS'),
                         }
                     }
                 }
@@ -256,7 +256,14 @@ module.exports = {
                 target: '?.browser.bemhtml.js',
                 filesTarget: '?.bemhtml.files',
                 sourceSuffixes: ['bemhtml', 'bemhtml.js'],
-                engineOptions : { elemJsInstances : true }
+                engineOptions : {
+                    elemJsInstances : true,
+                    requires : {
+                        'helper': {
+                            ym: 'helper',
+                        }
+                    }
+                }
             }],
 
             // js

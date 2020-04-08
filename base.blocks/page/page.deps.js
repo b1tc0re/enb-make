@@ -1,11 +1,13 @@
-({
-
-    shouldDeps: [
-        { block: 'helper', tech: 'bemhtml' }
-    ]
-},{
-    tech: 'js',
-    shouldDeps: [
-        { block: 'helper', tech: 'bemhtml' }
-    ]
-})
+[
+    {
+        shouldDeps: [
+            { block: 'helper' }
+        ]
+    },
+    {
+        tech : 'js',
+        shouldDeps : [
+            { block: 'helper', tech: 'bemhtml' }
+        ]
+    }
+]

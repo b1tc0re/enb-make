@@ -274,7 +274,17 @@ module.exports = {
             }],
 
             // borschik
-            [techs.borschik, { source: '?.js', target: '?.min.js', minify: true, freeze : true}],
+            [techs.borschik, {
+                source: '?.js',
+                target: '?.min.js',
+                minify: true,
+                freeze : true,
+                techOptions: {
+                    uglify: {
+                        keep_classnames: true
+                    }
+                }
+            }],
             [techs.borschik, { source: '?.css', target: '?.min.css', minify: true,  freeze : true }]
         ]);
 

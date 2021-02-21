@@ -14,7 +14,7 @@ module.exports = {
 
     platforms : null,
 
-    exceptionsBundle : [ 'merged' ],
+    exceptionsBundle : [ 'merged', 'project' ],
 
     configArg : null,
 
@@ -53,6 +53,7 @@ module.exports = {
      */
     initializeBundles : function () {
         this.platforms.forEach( (platform) => this.config.nodes(['bundles/'+ platform +'.bundles/*'], (nodeConfig) => {
+
             if( this.checkExceptions(nodeConfig) ) {
                 return false;
             }
@@ -90,7 +91,7 @@ module.exports = {
 
             bundles.forEach((bundle) => {
 
-                if (bundle !== 'merged' && bundle !== '.bem') {
+                if ( !this.exceptionsBundle.includes(bundle) && bundle !== '.bem') {
 
                     let nodePath = techs.path.join(dir, bundle),
                         bemDecl = bundle + '.bemdecl.js';
@@ -107,10 +108,149 @@ module.exports = {
             });
 
             // Объединяем скопированные BEMDECL-файлы
-            nodeConfig.addTech([techs.enbBemTechs.mergeBemdecl, {sources: bemdeclFiles}]);
+            nodeConfig.addTech([techs.enbBemTechs.mergeBemdecl, { sources: bemdeclFiles }]);
 
-            // Запуск сборки
             this._assemblyTechs(nodeConfig, platform);
+        }));
+
+        return this;
+    },
+
+    /**
+     * Сборать все бандлы в merged-bundle
+     *  - Объединение js и css файлов в один
+     *
+     * @return {exports}
+     */
+    initializProjectBundles : function() {
+
+        // Проверить название задания
+        if( this.isTask('assembly-projectBundle') === false ) {
+            return this;
+        }
+
+        // Проходим по всем объявленным платформам ['desktop', 'touch']
+        // для сбора decl файлов
+        this.platforms.forEach( (platform) => this.config.nodes([ 'bundles/'+ platform +'.bundles/project' ], (nodeConfig) => {
+
+            let dir = techs.path.dirname(nodeConfig.getPath()),
+                bundles = techs.files.fs.readdirSync(dir),
+                bemdeclFiles = [],
+                levels = this.getBaseLevels(platform);
+
+            if( bundles.length < 1 )
+                return false;
+
+            bundles.forEach((bundle) => {
+
+                if ( !this.exceptionsBundle.includes(bundle) && bundle !== '.bem') {
+
+                    let nodePath = techs.path.join(dir, bundle),
+                        bemDecl = bundle + '.bemdecl.js';
+
+                    nodeConfig.addTech([
+                        techs.enbBemTechs.provideBemdecl, {
+                            node: nodePath,
+                            target: bemDecl
+                        }
+                    ]);
+
+                    bemdeclFiles.push(bemDecl);
+                }
+            });
+
+            // Объединяем скопированные BEMDECL-файлы
+            nodeConfig.addTech([techs.enbBemTechs.mergeBemdecl, { sources: bemdeclFiles }]);
+
+            nodeConfig.addTechs([
+                // essential
+                [techs.enbBemTechs.levels, { levels: levels }],
+
+                [techs.enbBemTechs.deps],
+                [techs.enbBemTechs.files],
+
+                // css
+                [techs.postcss.postcss, {
+                    target: '?.css',
+                    oneOfSourceSuffixes: ['post.css', 'css'],
+                    plugins: techs.postcss.plugins
+                }],
+
+                // bemhtml
+                [techs.engines.bemhtml, {
+                    sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                    forceBaseTemplates: true,
+                    engineOptions : {
+                        elemJsInstances : true,
+                        requires : {
+                            'helper': {
+                                commonJS: techs.path.join(WorkSpace, 'base.blocks/helper/helper.commonJS'),
+                            }
+                        }
+                    }
+                }],
+
+                // html
+                [techs.html.bemhtml],
+
+                // client bemhtml
+                [techs.enbBemTechs.depsByTechToBemdecl, {
+                    target: '?.bemhtml.bemdecl.js',
+                    sourceTech: 'js',
+                    destTech: 'bemhtml'
+                }],
+                [techs.enbBemTechs.deps, {
+                    target: '?.bemhtml.deps.js',
+                    bemdeclFile: '?.bemhtml.bemdecl.js'
+                }],
+                [techs.enbBemTechs.files, {
+                    depsFile: '?.bemhtml.deps.js',
+                    filesTarget: '?.bemhtml.files',
+                    dirsTarget: '?.bemhtml.dirs'
+                }],
+                [techs.engines.bemhtml, {
+                    target: '?.browser.bemhtml.js',
+                    filesTarget: '?.bemhtml.files',
+                    sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                    engineOptions : {
+                        elemJsInstances : true,
+                        requires : {
+                            'helper': {
+                                ym: 'helper',
+                            }
+                        }
+                    }
+                }],
+
+                // js
+                [techs.bable, { includeYM: false, iife: true, bable : this._options.bable || {} } ],
+
+                [techs.files.merge, {
+                    target: '?.js',
+                    sources: ['?.browser.js']
+                }],
+
+                // borschik
+                [techs.borschik, {
+                    source: '?.js',
+                    target: '?.min.js',
+                    minify: true,
+                    freeze : true,
+                    techOptions: {
+                        uglify: {
+                            keep_classnames: true
+                        }
+                    }
+                }],
+                [techs.borschik, { source: '?.css', target: '?.min.css', minify: true,  freeze : true }]
+            ]);
+
+            if( !this.checkExceptions(nodeConfig) ) {
+                nodeConfig.addTechs([ [techs.enbBemTechs.bemjsonToBemdecl] ]);
+                nodeConfig.addTargets([/* '?.bemtree.js', */ '?.html']);
+            }
+
+            nodeConfig.addTargets([/* '?.bemtree.js', */ '?.min.css', '?.min.js']);
         }));
 
         return this;
@@ -344,7 +484,7 @@ module.exports = {
      */
     checkExceptions : function (nodeConfig) {
         let page = techs.path.basename(nodeConfig.getPath());
-        return !this.exceptionsBundle.indexOf(page);
+        return this.exceptionsBundle.includes(page);
     },
 
     /**

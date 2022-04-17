@@ -228,7 +228,7 @@ module.exports = {
 
                 [techs.files.merge, {
                     target: '?.js',
-                    sources: ['?.browser.js']
+                    sources: ['?.browser.js', '?.browser.bemhtml.js']
                 }],
 
                 // borschik

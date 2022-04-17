@@ -214,6 +214,7 @@ module.exports = {
                     sourceSuffixes: ['bemhtml', 'bemhtml.js'],
                     engineOptions : {
                         elemJsInstances : true,
+                        isDefineBemHtmlApi: true,
                         requires : {
                             'helper': {
                                 ym: 'helper',

@@ -14,7 +14,7 @@
   "main": "index.js",
   "dependencies": {
     "autoprefixer": "^9.7.5",
-    "bem-components": "^v5.1.1",
+    "bem-components": "^v6.0.1",
     "enb": "^1.5.1",
     "enb-bem-examples": "^1.0.2",
     "enb-bem-techs": "^2.2.2",
